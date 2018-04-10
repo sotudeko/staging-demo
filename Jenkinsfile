@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        DEV_REPO = 'staging-dev'
+        TEST_REPO = 'staging-test'
+        PROD_REPO = 'staging-prod'
+    }
+
     stages {
 
         stage('Build') {
@@ -19,7 +25,12 @@ pipeline {
             steps {
                 nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat-example', iqStage: 'build', jobCredentialsId: ''
             }
-        }    
+        }   
+
+        stage('Create Build Tag') {
+            steps {
+                sh 'find . -print'
+        }
     }
 }
 
