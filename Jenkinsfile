@@ -30,6 +30,7 @@ pipeline {
         stage('Create Build Tag') {
             steps {
                 sh 'find . -print'
+            }
         }
     }
 }
