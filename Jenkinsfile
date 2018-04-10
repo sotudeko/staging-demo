@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEV_REPO = 'staging-dev'
+        DEV_REPO = 'staging-demo'
         TEST_REPO = 'staging-test'
         PROD_REPO = 'staging-prod'
         ARTIFACT = './target/WebGoat-5.4.4.3-SNAPSHOT.war'
@@ -31,11 +31,19 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                sh './create_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
+                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
                 sh 'cat $TAG_FILE'
-                sh 'env'
+                sh './staging_info'
+                sh './staging_create_tag.sh $TAG_FILE'
+                sh './staging_info $DEV_REPO $BUILD_TAG'
             }
         }
+
+        // stage('Upload artifact to Staging Dev'){
+        //     steps {
+        //         sh './staging_info'
+        //     }
+        // }
     }
 }
 
