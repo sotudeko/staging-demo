@@ -36,9 +36,6 @@ pipeline {
                     echo "\"buildTag\": \"$BUILD_TAG\"" >> $TAG_FILE
                     echo"    }}" >> $TAG_FILE
                 '''
-            }
-
-            steps {
                 sh 'cat $TAG_FILE'
             }
         }
