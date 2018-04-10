@@ -5,6 +5,8 @@ pipeline {
         DEV_REPO = 'staging-dev'
         TEST_REPO = 'staging-test'
         PROD_REPO = 'staging-prod'
+        ARTIFACT = './target/WebGoat-5.4.4.3-SNAPSHOT.war'
+        TAG_FILE = './tag_file.json'
     }
 
     stages {
@@ -29,7 +31,15 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                sh 'find . -print'
+                sh '''
+                    echo "{“name”:”my-tag”, “attributes”:{" > $TAG_FILE
+                    echo "\"buildTag\": \"$BUILD_TAG\"" >> $TAG_FILE
+                    echo"    }}" >> $TAG_FILE
+                '''
+            }
+
+            steps {
+                sh 'cat $TAG_FILE'
             }
         }
     }
