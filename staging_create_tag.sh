@@ -1,10 +1,5 @@
 #!/bin/bash
 
-ruser=admin
-rpwd=admin123
+curl -X POST -u admin:admin123 -H 'Content-Type: application/json' -d @${1} http://localhost:8081/service/rest/beta/tags
 
-curl  -i -X POST —user "$ruser:$rpwd" —header ‘Content-Type: application/json’ \
--d @${1} \
-'http://localhost:8081/service/rest/beta/tags'
-
-
+ 

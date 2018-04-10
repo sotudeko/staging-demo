@@ -1,0 +1,9 @@
+{
+ "name": "jenkins-WebGoat-Example-Staging-Demo-14",
+ "attributes": { 
+    "buildUser": "sotudeko",
+    "buildJob": "WebGoat-Example-Staging-Demo",
+    "buildId": "14",
+    "buildUrl": "http://sola.local:8080/job/WebGoat-Example-Staging-Demo/14/"
+  }
+}

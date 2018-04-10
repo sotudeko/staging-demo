@@ -33,9 +33,9 @@ pipeline {
             steps {
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
                 sh 'cat $TAG_FILE'
-                sh './staging_info.sh $DEV_REPO $BUILD_TAG'
+                sh './staging_info.sh'
                 sh './staging_create_tag.sh $TAG_FILE'
-                sh './staging_info.sh $DEV_REPO $BUILD_TAG'
+                sh './staging_info.sh'
             }
         }
 
