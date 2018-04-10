@@ -32,9 +32,9 @@ pipeline {
         stage('Create Build Tag') {
             steps {
                 sh '''
-                    echo '{“name”:"my-tag”, “attributes”:{' > $TAG_FILE
-                    echo '"buildTag": "$BUILD_TAG"" >> $TAG_FILE
-                    echo '    }}' >> $TAG_FILE
+                    echo "{\“name\”:\"my-tag\”, \“attributes\”:{\"" > $TAG_FILE
+                    echo "\"buildTag\": \"$BUILD_TAG\"" >> $TAG_FILE
+                    echo "}}" >> $TAG_FILE
                 '''
                 sh 'cat $TAG_FILE'
             }
