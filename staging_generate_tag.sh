@@ -2,7 +2,7 @@
 
 echo '{'
 echo " \"name\": \"$5\"," 
-echo ' “attributes”: { '
+echo ' "attributes": { '
 echo "    \"buildUser\": \"$1\"," 
 echo "    \"buildJob\": \"$2\","
 echo "    \"buildId\": \"$3\"," 
