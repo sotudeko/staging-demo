@@ -3,6 +3,7 @@
 echo '{'
 echo ' “name”:"my-tag”,' 
 echo ' “attributes”: { '
-echo "    \"buildTag\": \"$1\"," 
+echo "    \"buildUser\": \"$1\"," 
+echo "    \"buildNumber\": \"$2\","
 echo '  }'
 echo '}'

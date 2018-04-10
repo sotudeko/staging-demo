@@ -33,6 +33,7 @@ pipeline {
             steps {
                 sh './create_tag.sh $BUILD_TAG > $TAG_FILE'
                 sh 'cat $TAG_FILE'
+                sh 'env'
             }
         }
     }
