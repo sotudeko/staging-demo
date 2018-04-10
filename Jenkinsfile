@@ -31,7 +31,7 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                sh './create_tag.sh $BUILD_TAG > $TAG_FILE'
+                sh './create_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
                 sh 'cat $TAG_FILE'
                 sh 'env'
             }

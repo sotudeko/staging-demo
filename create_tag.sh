@@ -1,9 +1,11 @@
 #!/bin/sh
 
 echo '{'
-echo ' “name”:"my-tag”,' 
+echo " \"name\": \"$5\"," 
 echo ' “attributes”: { '
 echo "    \"buildUser\": \"$1\"," 
-echo "    \"buildNumber\": \"$2\","
+echo "    \"buildJob\": \"$2\","
+echo "    \"buildId\": \"$3\"," 
+echo "    \"buildUrl\": \"$4\"" 
 echo '  }'
 echo '}'
