@@ -36,7 +36,7 @@
 	    </repository>
     </distributionManagement>
 
-	<build>
+	<!-- <build>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -63,7 +63,7 @@
         <configuration>
               <serverId>nexus</serverId>
           <nexusUrl>http://localhost:8081/nexus/</nexusUrl>
-          <!-- update this to the correct id! -->
+          update this to the correct id!
           <stagingProfileId>13e614824fbafdf2</stagingProfileId>
         </configuration>
       </plugin>
@@ -74,7 +74,7 @@
         			</configuration>
       			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 
 	<dependencies>
 		<dependency>
