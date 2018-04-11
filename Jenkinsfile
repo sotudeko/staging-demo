@@ -28,11 +28,9 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                // writeFile file: './test.sh', text: '{"name":"sola"}'
-                // writeFile file: '$TAG_FILE', text: '{ "name": "$BUILD_TAG", "attributes": { "buildUser": "$USER", "buildJob": "$JOB_NAME", "buildId": "$BUILD_ID", "buildUrl": "$BUILD_URL" } }'
-                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
-                sh 'cat $TAG_FILE'
+                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION> $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
+                sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -H "Accept: application/json" http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG}?repository=${DEV_REPO}&maven.groupId=WebGoat&maven.artifactId=WebGoat&maven.baseVersion=${BUILD_VERSION}'
             }
         }
 
