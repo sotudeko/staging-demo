@@ -30,7 +30,7 @@ pipeline {
             steps {
                 writeFile file: './test.sh', text: '{"name":"sola"}'
 
-                writeFile file: '$TAG_FILE', text: '{ "name": \"$BUILD_TAG\", \"attributes\": { \"buildUser\": \"$USER\", \"buildJob\": \"$JOB_NAME\", \"buildId\": \"$BUILD_ID\", \"buildUrl\": \"$BUILD_URL\" } }'
+                writeFile file: '$TAG_FILE', text: '{ "name": "$BUILD_TAG", "attributes": { "buildUser": "$USER", "buildJob": "$JOB_NAME", "buildId": "$BUILD_ID", "buildUrl": "$BUILD_URL" } }'
                 
                 sh 'cat ./test.sh'
                 sh 'cat $TAG_FILE'
