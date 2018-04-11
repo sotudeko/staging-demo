@@ -28,9 +28,10 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION> $TAG_FILE'
+                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -H "Accept: application/json" http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG} -d repository=${DEV_REPO} -d maven.groupId=WebGoat -d maven.artifactId=WebGoat -d maven.baseVersion=${BUILD_VERSION}'
+                sh 'curl -s -X GET -u admin:admin123 http://localhost:8081/service/rest/beta/search -d repository=${DEV_REPO} -d tag=${BUILD_TAG}'
             }
         }
 
