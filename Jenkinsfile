@@ -29,7 +29,7 @@ pipeline {
         stage('Create Build Tag') {
             steps {
                 sh '''
-                    echo { \"name\": \"$BUILD_TAG\", \"attributes\": { \"buildUser\": \"$USER\", \"buildJob\": \"$JOB_NAME\", \"buildId\": \"$BUILD_ID\", \"buildUrl\": \"$BUILD_URL\" } } > $TAG_FILE
+                    echo "{ \"name\": \"$BUILD_TAG\", \"attributes\": { \"buildUser\": \"$USER\", \"buildJob\": \"$JOB_NAME\", \"buildId\": \"$BUILD_ID\", \"buildUrl\": \"$BUILD_URL\" } }" > $TAG_FILE
                 '''
                 sh 'cat $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
