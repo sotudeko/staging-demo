@@ -32,7 +32,7 @@
 	    </snapshotRepository>
 	    <repository>
 	      <id>nexus-releases</id>
-	      <url>http://localhost:8081/repository/mvn-releases</url>
+	      <url>http://localhost:8081/repository/staging-dev</url>
 	    </repository>
     </distributionManagement>
 
