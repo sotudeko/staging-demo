@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEV_REPO = 'staging-demo'
-        TEST_REPO = 'staging-test'
-        PROD_REPO = 'staging-prod'
-        ARTIFACT = './target/WebGoat-5.4.4.3-SNAPSHOT.war'
+        DEV_REPO = 'staging-dev'
         TAG_FILE = './tag_file.json'
     }
 
@@ -13,7 +10,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore clean package'
+                sh 'mvn -Dproject.version=$BUILD_VERSION -Dmaven.test.failure.ignore clean package'
             }
             post {
                 success {
@@ -31,11 +28,20 @@ pipeline {
 
         stage('Create Build Tag') {
             steps {
-                sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
-                sh 'cat $TAG_FILE'
-                sh './staging_info.sh'
-                sh './staging_create_tag.sh $TAG_FILE'
-                sh './staging_info.sh'
+                sh '''
+                    echo '{'
+                    echo " \"name\": \"$5\"," 
+                    echo ' "attributes": { '
+                    echo "    \"buildUser\": \"$1\"," 
+                    echo "    \"buildJob\": \"$2\","
+                    echo "    \"buildId\": \"$3\"," 
+                    echo "    \"buildUrl\": \"$4\"" 
+                    echo '  }'
+                    echo '}'
+                '''
+                // sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG > $TAG_FILE'
+                // sh 'cat $TAG_FILE'
+                // sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
             }
         }
 

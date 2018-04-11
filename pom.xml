@@ -4,7 +4,11 @@
 	<groupId>WebGoat</groupId>
 	<artifactId>WebGoat</artifactId>
 	<packaging>war</packaging>
-	<version>5.4.4.3-SNAPSHOT</version>
+	<version>${project.version}</version>
+
+	<properties>
+    	<project.version>5.0-SNAPSHOT</project.version>
+	</properties>
 
 	<!-- to download from nexus -->
   	<repositories>
