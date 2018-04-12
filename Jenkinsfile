@@ -27,7 +27,7 @@ pipeline {
             // }
 
             steps {
-                scan_op = sh(returnStdout: true, script: "'java' -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s 'http://localhost:8070' -a admin:admin123 ${SCAN_FILE}").trim()
+                scan_op = sh(returnStdout: true, script: "'java' -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -a admin:admin123 ${SCAN_FILE}").trim()
                 echo scan_op
             }
         }   
