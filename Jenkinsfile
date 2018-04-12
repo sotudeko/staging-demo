@@ -30,6 +30,8 @@ pipeline {
                 sh 'java -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ./target/WebGoat-${BUILD_VERSION}.war -r ./scan.json'
                 sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", " > ./scanreport.txt'                
                 sh 'cat ./scanreport.txt'
+                sh 'export JJK=`cat ./scanreport.txt`'
+                sh 'echo $JJK'
 
                 
                 // script {
@@ -61,7 +63,7 @@ pipeline {
                 }
 
 
-                echo '${scanurl}'
+                echo '$scanurl'
                 sh 'echo $scanurl'
 
                 echo '${scan_url}'
