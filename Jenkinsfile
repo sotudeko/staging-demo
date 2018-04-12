@@ -35,13 +35,15 @@ pipeline {
             }
 
             post {
-                
-                scanurl = sh (
+                success{
+                scanurl = sh (  
                     script: 'cat ./scan.json',
                     returnStdout: true
                 ).trim()
 
-                // echo '$scanurl'
+                echo '$scanurl'
+                }
+                
             }
         }   
 
