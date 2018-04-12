@@ -55,8 +55,14 @@ pipeline {
             //         ).trim()
             //     }
             steps {
-                def scanurl = readFile('scanreport.txt').trim()
+                script{
+                    def scanurl = readFile('scanreport.txt').trim() 
+                }
+
                 echo '${scanurl}'
+                sh 'echo $scanurl'
+
+                
 
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
