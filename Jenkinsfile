@@ -28,20 +28,12 @@ pipeline {
 
             steps {
                 sh 'java -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ./target/WebGoat-${BUILD_VERSION}.war -r ./scan.json'
-                sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", " > ./scanreport.txt'                
             }
         }   
 
         stage('Tag Build') {
             
             steps {
-                sh 'cat ./scanreport.txt'
-
-                // script{
-                //     def scanurl = readFile file: './scanreport.txt' 
-                //     def scan_url = sh(returnStdout: true, script: 'cat ./scanreport.txt', ).trim()
-                // }
-
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
                 sh 'curl -s -X POST -u admin:admin123 --header "Content-Type: application/json" --header "Accept: application/json" "http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG}?repository=staging-dev&maven.groupId=WebGoat&maven.artifactId=WebGoat&maven.baseVersion=${BUILD_VERSION}"'
