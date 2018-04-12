@@ -32,8 +32,9 @@ pipeline {
                 sh 'cat ./scanreport.txt'
                 script {
                     env.SCAN_URL = readFile './scanreport.txt'
-                    echo '$SCAN_URL'
+                    
                 }
+                echo '${env.SCAN_URL}'
             }
         }   
 
