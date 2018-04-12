@@ -31,13 +31,14 @@ pipeline {
                 sh 'cat ./scan.json'
                 
                 // scanurl = sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "'
+                    // script: 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "',
 
                 scanurl = sh (
-                    script: 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "',
+                    script: 'cat ./scan.json',
                     returnStdout: true
                 ).trim()
 
-                echo '$scanurl'
+                // echo '$scanurl'
             }
         }   
 
