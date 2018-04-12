@@ -32,7 +32,7 @@ pipeline {
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
                 // sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -H "Accept: application/json" http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG} -d repository=${DEV_REPO} -d maven.groupId=WebGoat -d maven.artifactId=WebGoat -d maven.baseVersion=${BUILD_VERSION}'
                 sh 'curl -s -X POST -u admin:admin123 --header "Content-Type: application/json" --header "Accept: application/json" "http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG}?repository=staging-dev&maven.groupId=WebGoat&maven.artifactId=WebGoat&maven.baseVersion=${BUILD_VERSION}"'
-                // sh 'curl  -X GET --user admin:admin123 "http://localhost:8081/service/rest/beta/search?repository=${DEV_REPO}&tag=${BUILD_TAG}"'
+                sh 'echo curl  -X GET --user admin:admin123 "http://localhost:8081/service/rest/beta/search?repository=${DEV_REPO}&tag=${BUILD_TAG}"'
             }
         }
 
