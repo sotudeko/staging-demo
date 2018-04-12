@@ -56,7 +56,7 @@ pipeline {
             //     }
             steps {
                 script{
-                    def scanurl = readFile('./scanreport.txt').trim() 
+                    def scanurl = readFile './scanreport.txt' 
                     def scan_url = sh(returnStdout: true, script: 'cat ./scanreport.txt', ).trim()
                 }
 
