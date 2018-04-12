@@ -29,45 +29,18 @@ pipeline {
             steps {
                 sh 'java -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ./target/WebGoat-${BUILD_VERSION}.war -r ./scan.json'
                 sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", " > ./scanreport.txt'                
-                sh 'cat ./scanreport.txt'
-                sh 'export JJK=`cat ./scanreport.txt`'
-                sh 'echo $JJK'
-
-                
-                // script {
-                    
-                //     // env.SCAN_URL = readFile './scanreport.txt'
-                    
-                // }
-                // echo '${SCAN_URL}'
             }
         }   
 
         stage('Tag Build') {
-            // environment {
-            //         SCAN_URL = readFile './scanreport.txt'
-            //         }
-
-            // steps {
-
-            //     script{
-            //         scanurl = sh (
-            //         script: 'cat ./scanreport.txt',
-            //         returnStdout: true
-            //         ).trim()
-            //     }
+            
             steps {
-                script{
-                    def scanurl = readFile file: './scanreport.txt' 
-                    def scan_url = sh(returnStdout: true, script: 'cat ./scanreport.txt', ).trim()
-                }
+                sh 'cat ./scanreport.txt'
 
-
-                echo '$scanurl'
-                sh 'echo $scanurl'
-
-                echo '${scan_url}'
-                sh 'echo $scan_url'
+                // script{
+                //     def scanurl = readFile file: './scanreport.txt' 
+                //     def scan_url = sh(returnStdout: true, script: 'cat ./scanreport.txt', ).trim()
+                // }
 
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
