@@ -31,19 +31,23 @@ pipeline {
                 sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", " > ./scanreport.txt'                
                 sh 'cat ./scanreport.txt'
 
-                environment {
-                    SCAN_URL = readFile './scanreport.txt'
-                }
+                
                 // script {
-                //     env.SCAN_URL = readFile './scanreport.txt'
+                    
+                //     // env.SCAN_URL = readFile './scanreport.txt'
                     
                 // }
-                echo '${SCAN_URL}'
+                // echo '${SCAN_URL}'
             }
         }   
 
         stage('Tag Build') {
+            environment {
+                    SCAN_URL = readFile './scanreport.txt'
+                    }
+
             steps {
+                echo '${SCAN_URL}'
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
                 sh 'curl -s -X POST -u admin:admin123 -H "Content-Type: application/json" -d @$TAG_FILE http://localhost:8081/service/rest/beta/tags'
                 sh 'curl -s -X POST -u admin:admin123 --header "Content-Type: application/json" --header "Accept: application/json" "http://localhost:8081/service/rest/beta/tags/associate/${BUILD_TAG}?repository=staging-dev&maven.groupId=WebGoat&maven.artifactId=WebGoat&maven.baseVersion=${BUILD_VERSION}"'
