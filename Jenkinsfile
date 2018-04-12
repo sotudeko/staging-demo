@@ -50,12 +50,11 @@ pipeline {
 
                 script{
                     scanurl = sh (
-                    script: ''cat ./scanreport.txt'',
+                    script: 'cat ./scanreport.txt',
                     returnStdout: true
                     ).trim()
                 }
                 
-
                 echo '${scanurl}'
 
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
