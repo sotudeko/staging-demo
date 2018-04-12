@@ -4,6 +4,7 @@ pipeline {
     environment {
         DEV_REPO = 'staging-dev'
         TAG_FILE = './tag_file.json'
+        SCAN_FILE = './target/WebGoat-5.4.4.3-SNAPSHOT.war'
     }
 
     stages {
@@ -21,8 +22,13 @@ pipeline {
         }
 
         stage('Nexus IQ Scan'){
+            // steps {
+            //     nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat-example', iqStage: 'build', jobCredentialsId: ''
+            // }
+
             steps {
-                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'webgoat-example', iqStage: 'build', jobCredentialsId: ''
+                def scan_op = sh(returnStdout: true, script: "'java' -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ${SCAN_FILE}").trim()
+                echo scan_op
             }
         }   
 
