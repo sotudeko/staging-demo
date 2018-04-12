@@ -31,8 +31,10 @@ pipeline {
                 sh 'cat ./scan.json'
                 
                 // scanurl = sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "'
-                    // script: 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "',
+                // script: 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "',
+            }
 
+            steps {
                 scanurl = sh (
                     script: 'cat ./scan.json',
                     returnStdout: true
