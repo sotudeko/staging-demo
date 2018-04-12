@@ -29,8 +29,15 @@ pipeline {
             steps {
                 sh 'java -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ./target/WebGoat-${BUILD_VERSION}.war -r ./scan.json'
                 sh 'cat ./scan.json'
-                scanurl = sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "'
-                sh 'echo scanurl=${scanurl}'
+                
+                // scanurl = sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "'
+
+                scanurl = sh (
+                    script: 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", "',
+                    returnStdout: true
+                ).trim()
+
+                echo '$scanurl'
             }
         }   
 
