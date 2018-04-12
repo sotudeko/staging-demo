@@ -42,19 +42,20 @@ pipeline {
         }   
 
         stage('Tag Build') {
-            environment {
-                    SCAN_URL = readFile './scanreport.txt'
-                    }
+            // environment {
+            //         SCAN_URL = readFile './scanreport.txt'
+            //         }
 
-            steps {
+            // steps {
 
-                script{
-                    scanurl = sh (
-                    script: 'cat ./scanreport.txt',
-                    returnStdout: true
-                    ).trim()
-                }
+            //     script{
+            //         scanurl = sh (
+            //         script: 'cat ./scanreport.txt',
+            //         returnStdout: true
+            //         ).trim()
+            //     }
                 
+                def scanurl = readFile('scanreport.txt').trim()
                 echo '${scanurl}'
 
                 sh './staging_generate_tag.sh $USER $JOB_NAME $BUILD_ID $BUILD_URL $BUILD_TAG $BUILD_VERSION > $TAG_FILE'
