@@ -30,11 +30,15 @@ pipeline {
                 sh 'java -jar /opt/nexus-iq/nexus-iq-cli -i webgoat-example -s http://localhost:8070 -a admin:admin123 ./target/WebGoat-${BUILD_VERSION}.war -r ./scan.json'
                 sh 'cat scan.json | grep reportHtmlUrl | cut -f2- -d":" | tr -d ", " > ./scanreport.txt'                
                 sh 'cat ./scanreport.txt'
-                script {
-                    env.SCAN_URL = readFile './scanreport.txt'
-                    
+
+                environment {
+                    SCAN_URL = readFile './scanreport.txt'
                 }
-                echo '${env.SCAN_URL}'
+                // script {
+                //     env.SCAN_URL = readFile './scanreport.txt'
+                    
+                // }
+                echo '${SCAN_URL}'
             }
         }   
 
